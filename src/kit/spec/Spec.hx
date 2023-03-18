@@ -1,5 +1,6 @@
 package kit.spec;
 
+import haxe.Exception;
 import haxe.PosInfos;
 import kit.spec.Result;
 import kit.Maybe;
@@ -35,14 +36,14 @@ final class Spec {
 		if (body == null) {
 			addAssertion(Warn('Incomplete spec'));
 			var result = new SpecResult(description, assertions);
-			return Task.ofSync(result);
+			return Task.resolve(result);
 		}
 
 		// @todo: Add timeout
-		return new Future<kit.Result<SpecResult>>(activate -> {
+		return new Future<kit.Result<SpecResult, Error>>(activate -> {
 			Should.bind(this);
 			body.invoke(this).handle(res -> switch res {
-				case Success(_):
+				case Ok(_):
 					Should.clear();
 
 					switch expectsAssertions {
@@ -58,12 +59,12 @@ final class Spec {
 
 					events.onSpecComplete.dispatch(result);
 
-					activate(Success(result));
-				case Failure(exception):
+					activate(Ok(result));
+				case Error(error):
 					Should.clear();
-					addAssertion(Fail(exception.message));
+					addAssertion(Fail(error.message));
 					var result = new SpecResult(description, assertions);
-					activate(Success(result));
+					activate(Ok(result));
 			});
 		});
 	}
@@ -102,7 +103,7 @@ abstract SpecBody(SpecBodyType) {
 		return switch this {
 			case Sync(cb):
 				cb(spec);
-				Task.ofSync(None);
+				Task.resolve(None);
 			case Async(cb):
 				cb(spec).next(res -> Some(res));
 		}

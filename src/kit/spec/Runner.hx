@@ -21,8 +21,8 @@ final class Runner {
 		return new Future(activate -> {
 			Task.sequence(...suites.map(s -> s.run())).handle(result -> {
 				switch result {
-					case Success(results): events.onComplete.dispatch(new Result(results));
-					case Failure(exception): events.onFailure.dispatch(exception);
+					case Ok(results): events.onComplete.dispatch(new Result(results));
+					case Error(error): events.onFailure.dispatch(error);
 				}
 				activate(result);
 			});

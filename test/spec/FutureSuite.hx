@@ -61,8 +61,8 @@ class FutureSuite extends Suite {
 				var future = new Future(activate -> activate('foo'));
 				future.map(foo -> foo.should().be('foo')); // should not be called
 
-				return new Future<Result<Any>>(activate -> {
-					Timer.delay(() -> activate(Success(Maybe.None)), 10);
+				return new Future<Result<Any, Any>>(activate -> {
+					Timer.delay(() -> activate(Ok(Nothing)), 10);
 				});
 			});
 		});

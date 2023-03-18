@@ -1,7 +1,5 @@
 package spec;
 
-import haxe.Exception;
-
 class TaskSuite extends Suite {
 	function execute() {
 		describe('Given a static vlaue', () -> {
@@ -16,9 +14,9 @@ class TaskSuite extends Suite {
 			it('can fail if an exception is returned', (spec:Spec) -> {
 				spec.expect(1);
 				var foo:Task<String> = 'foo';
-				return foo.next(foo -> new Exception('expected')).recover(e -> {
+				return foo.next(foo -> new Error(InternalError, 'expected')).recover(e -> {
 					e.message.should().be('expected');
-					Task.ofSync('foo');
+					Task.resolve('foo');
 				});
 			});
 		});
