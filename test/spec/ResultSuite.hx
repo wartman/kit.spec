@@ -1,7 +1,5 @@
 package spec;
 
-import haxe.Exception;
-
 class ResultSuite extends Suite {
 	function execute() {
 		describe('kit.ds.Result<String>', () -> {

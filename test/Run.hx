@@ -18,6 +18,7 @@ function main() {
 	runner.add(spec.LazySuite);
 	runner.add(spec.EventSuite);
 	runner.add(spec.ResultSuite);
+	runner.add(spec.MaybeSuite);
 
 	runner.run();
 }
