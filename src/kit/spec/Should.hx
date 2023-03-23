@@ -49,8 +49,8 @@ final class Should<T> {
 			spec.addAssertion(Pass);
 		}
 	}
+}
 
-	function format(value:T) {
-		return '`${Std.string(value)}`';
-	}
+private function format<T>(value:T) {
+	return '`${Std.string(value)}`';
 }

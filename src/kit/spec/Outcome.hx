@@ -1,17 +1,17 @@
 package kit.spec;
 
-final class Result {
-	public final suites:Array<SuiteResult>;
+final class Outcome {
+	public final suites:Array<SuiteOutcome>;
 
 	public function new(suites) {
 		this.suites = suites;
 	}
 }
 
-final class SuiteResult {
+final class SuiteOutcome {
 	public final description:String;
-	public final specs:Array<SpecResult>;
-	public final children:Array<SuiteResult>;
+	public final specs:Array<SpecOutcome>;
+	public final children:Array<SuiteOutcome>;
 
 	public function new(description, specs, ?children) {
 		this.description = description;
@@ -19,7 +19,7 @@ final class SuiteResult {
 		this.children = children == null ? [] : children;
 	}
 
-	public function status():SuiteResultStatus {
+	public function status():SuiteOutcomeStatus {
 		return {
 			total: specs.length,
 			passed: specs.filter(s -> s.status().failed == 0).length,
@@ -28,9 +28,9 @@ final class SuiteResult {
 	}
 }
 
-typedef SuiteResultStatus = {passed:Int, failed:Int, total:Int};
+typedef SuiteOutcomeStatus = {passed:Int, failed:Int, total:Int};
 
-final class SpecResult {
+final class SpecOutcome {
 	public final description:String;
 	public final assertions:Array<Assertion>;
 
@@ -39,7 +39,7 @@ final class SpecResult {
 		this.assertions = assertions;
 	}
 
-	public function status():SpecResultStatus {
+	public function status():SpecOutcomeStatus {
 		return {
 			passed: assertions.filter(a -> a.equals(Pass)).length,
 			failed: assertions.filter(a -> !a.equals(Pass)).length
@@ -47,4 +47,4 @@ final class SpecResult {
 	};
 }
 
-typedef SpecResultStatus = {passed:Int, failed:Int};
+typedef SpecOutcomeStatus = {passed:Int, failed:Int};

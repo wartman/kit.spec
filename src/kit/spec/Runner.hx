@@ -1,5 +1,7 @@
 package kit.spec;
 
+import kit.spec.Outcome.SuiteOutcome;
+
 final class Runner {
 	public final events:Events = new Events();
 
@@ -17,11 +19,11 @@ final class Runner {
 		return events.addReporter(reporter);
 	}
 
-	public function run() {
+	public function run():Task<Array<SuiteOutcome>> {
 		return new Future(activate -> {
 			Task.sequence(...suites.map(s -> s.run())).handle(result -> {
 				switch result {
-					case Ok(results): events.onComplete.dispatch(new Result(results));
+					case Ok(outcomes): events.onComplete.dispatch(new Outcome(outcomes));
 					case Error(error): events.onFailure.dispatch(error);
 				}
 				activate(result);

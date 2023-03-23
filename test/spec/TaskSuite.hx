@@ -2,7 +2,7 @@ package spec;
 
 class TaskSuite extends Suite {
 	function execute() {
-		describe('Given a static vlaue', () -> {
+		describe('Given a static value', () -> {
 			it('will be converted into a task', (spec:Spec) -> {
 				spec.expect(1);
 				var foo:Task<String> = 'foo';

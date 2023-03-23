@@ -1,8 +1,7 @@
 package kit.spec;
 
-import haxe.Exception;
 import haxe.PosInfos;
-import kit.spec.Result;
+import kit.spec.Outcome;
 import kit.Maybe;
 
 @:allow(kit.spec)
@@ -32,15 +31,15 @@ final class Spec {
 		return new Should(subject, this);
 	}
 
-	public function run(?pos:PosInfos):Task<SpecResult> {
+	public function run(?pos:PosInfos):Task<SpecOutcome> {
 		if (body == null) {
 			addAssertion(Warn('Incomplete spec'));
-			var result = new SpecResult(description, assertions);
-			return Task.resolve(result);
+			var outcome = new SpecOutcome(description, assertions);
+			return Task.resolve(outcome);
 		}
 
 		// @todo: Add timeout
-		return new Future<kit.Result<SpecResult, Error>>(activate -> {
+		return new Future<Result<SpecOutcome, Error>>(activate -> {
 			Should.bind(this);
 			body.invoke(this).handle(res -> switch res {
 				case Ok(_):
@@ -55,16 +54,16 @@ final class Spec {
 							addAssertion(Fail('Expected ${count} but asserted ${assertions.length}', pos));
 					}
 
-					var result = new SpecResult(description, assertions);
+					var outcome = new SpecOutcome(description, assertions);
 
-					events.onSpecComplete.dispatch(result);
+					events.onSpecComplete.dispatch(outcome);
 
-					activate(Ok(result));
+					activate(Ok(outcome));
 				case Error(error):
 					Should.clear();
 					addAssertion(Fail(error.message));
-					var result = new SpecResult(description, assertions);
-					activate(Ok(result));
+					var outcome = new SpecOutcome(description, assertions);
+					activate(Ok(outcome));
 			});
 		});
 	}

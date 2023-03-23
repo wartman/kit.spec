@@ -1,6 +1,6 @@
 package kit.spec;
 
-import kit.spec.Result;
+import kit.spec.Outcome;
 import kit.spec.Spec;
 
 using Type;
@@ -19,7 +19,7 @@ abstract class Suite {
 
 	public function run() {
 		execute();
-		return Task.sequence(...suites.map(s -> s.run())).next(results -> new SuiteResult(this.getClass().getClassName(), [], results));
+		return Task.sequence(...suites.map(s -> s.run())).next(outcomes -> new SuiteOutcome(this.getClass().getClassName(), [], outcomes));
 	}
 
 	function describe(description:String, specs:() -> Void) {
@@ -67,11 +67,11 @@ class SuiteSection {
 		children.push(child);
 	}
 
-	public function run():Task<SuiteResult> {
-		return Task.sequence(...specs.map(spec -> spec.run())).next(specResults -> Task.sequence(...children.map(s -> s.run())).next(childrenResults -> {
-			var result = new SuiteResult(description, specResults, childrenResults);
-			events.onSuiteComplete.dispatch(result);
-			result;
+	public function run():Task<SuiteOutcome> {
+		return Task.sequence(...specs.map(spec -> spec.run())).next(specOutcomes -> Task.sequence(...children.map(s -> s.run())).next(childrenOutcomes -> {
+			var outcome = new SuiteOutcome(description, specOutcomes, childrenOutcomes);
+			events.onSuiteComplete.dispatch(outcome);
+			outcome;
 		}));
 	}
 }

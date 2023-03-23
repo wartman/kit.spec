@@ -1,0 +1,11 @@
+{
+  "name": "kit.spec",
+  "classPath": "src/",
+  "contributors": ["wartman"],
+  "license": "MIT",
+  "dependencies": {
+    "kit": "0.0.1-alpha.1"
+  },
+  "releasenote": "Initial release",
+  "version": "0.0.1-alpha.1"
+}
