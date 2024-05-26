@@ -3,6 +3,4 @@
 
 -lib kit
 
--main Run
-
--js dist/test.js
+--run Run

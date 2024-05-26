@@ -4,8 +4,8 @@
   "contributors": ["wartman"],
   "license": "MIT",
   "dependencies": {
-    "kit": "0.0.1-alpha.1"
+    "kit": "0.1.1"
   },
-  "releasenote": "Initial release",
-  "version": "0.0.1-alpha.1"
+  "releasenote": "Latest Kit",
+  "version": "0.0.2"
 }

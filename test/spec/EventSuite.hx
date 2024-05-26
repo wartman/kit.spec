@@ -2,7 +2,7 @@ package spec;
 
 class EventSuite extends Suite {
 	function execute() {
-		describe('kit.event.Event<String>', () -> {
+		describe('kit.Event<String>', () -> {
 			describe('When given a listener', () -> {
 				it('will trigger it on dispatch', () -> {
 					var event = new Event<String>();

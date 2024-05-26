@@ -9,7 +9,6 @@ final class Runner {
 
 	public function new() {}
 
-	// @todo: make this a macro?
 	public function add(cls:Class<Suite>) {
 		var suite = Type.createInstance(cls, [events]);
 		suites.push(suite);

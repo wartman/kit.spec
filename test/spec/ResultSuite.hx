@@ -2,7 +2,7 @@ package spec;
 
 class ResultSuite extends Suite {
 	function execute() {
-		describe('kit.ds.Result<String>', () -> {
+		describe('kit.Result<String>', () -> {
 			it('can succeed or fail', () -> {
 				// What exactly are we testing here.
 				var result:Result<String, String> = Ok('Ok');

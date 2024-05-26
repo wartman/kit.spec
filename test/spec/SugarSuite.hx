@@ -25,6 +25,7 @@ class SugarSuite extends Suite {
 					});
 				});
 			});
+
 			describe('*.ifExtract', () -> {
 				describe('Given an enum', () -> {
 					it('returns true if it matches', (spec:Spec) -> {
@@ -50,10 +51,12 @@ class SugarSuite extends Suite {
 					});
 				});
 			});
+
 			describe('*.pipe', () -> {
 				function add(input:String, append:String) {
 					return input + append;
 				}
+
 				describe('Given a list of function calls', () -> {
 					it('will pipe them', () -> {
 						var result = 'foo'.pipe(add(_, 'bar'), add('bin', _), add(_, 'bax'));

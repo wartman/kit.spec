@@ -14,6 +14,7 @@ function main() {
 
 	runner.add(spec.FutureSuite);
 	runner.add(spec.TaskSuite);
+	runner.add(spec.StreamSuite);
 	runner.add(spec.SugarSuite);
 	runner.add(spec.LazySuite);
 	runner.add(spec.EventSuite);
